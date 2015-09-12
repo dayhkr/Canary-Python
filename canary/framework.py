@@ -66,7 +66,7 @@ class canary():
     def test(s):
         url = s.build_url({ 'action': 'test'})
         s.retrieve(url=url)
-	    return s.data
+	return s.data
 
     # Users with the ability to submit data can use this to send. This is not documented.
     def store(s, title, text, source, source_url):
