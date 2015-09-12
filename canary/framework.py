@@ -40,23 +40,31 @@ class canary():
             r = requests.get(url)
         if r.status_code == 200:
             s.data = json.loads(r.text)
-
     # 'data' must be in the form of a dictionary
+
     def build_url(s, data):
         d = [ '%s=%s' % (x, y) for x, y in data.iteritems() ]
         return '%s&%s' % (s.url, '&'.join(d))
 
     # Does a search--whee. Bangs can be specified via separate argument. This is due to plan to make changes to the search for API users
     # in the future.
+
     def search(s, query, bang=None):
         if bang != None:
             query = '!%s %s' % (bang, query)
         url = s.build_url({ 'action': 'search', 'query': query })
         s.retrieve(url=url)
+        return s.data
 
     # Views a reference ID. Nothing special.
+
     def view(s, item):
         url = s.build_url({ 'action': 'view', 'item': item })
+        s.retrieve(url=url)
+        return s.data
+
+    def test(s):
+        url = s.build_url({ 'action': 'test'})
         s.retrieve(url=url)
 
     # Users with the ability to submit data can use this to send. This is not documented.
